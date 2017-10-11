@@ -1,0 +1,5 @@
+D:\NEO\imusify\contract\contract\bin\Release\contract.dll
+D:\NEO\imusify\contract\contract\bin\Release\Neo.SmartContract.Framework.dll
+D:\NEO\imusify\contract\contract\obj\Release\contract.csprojResolveAssemblyReference.cache
+D:\NEO\imusify\contract\contract\obj\Release\contract.csproj.CoreCompileInputs.cache
+D:\NEO\imusify\contract\contract\obj\Release\contract.dll
