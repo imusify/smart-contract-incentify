@@ -1,3 +1,4 @@
 .vs/
 contract/bin/
-contract/obj
+contract/obj/
+packages/

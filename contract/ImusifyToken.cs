@@ -11,10 +11,10 @@ namespace contract
     {
         public static string Name() => "Imusify";
         public static string Symbol() => "IMU";
-        public static readonly byte[] Owner = { 101, 198, 101, 159, 8, 177, 16, 196, 26, 207, 24, 21, 26, 164, 18, 56, 136, 55, 255, 30, 196, 181, 47, 131, 21, 10, 70, 133, 69, 143, 62, 197 };
+        public static readonly byte[] Owner = { 159, 243, 169, 254, 13, 229, 158, 123, 147, 6, 65, 141, 170, 124, 37, 124, 23, 231, 250, 6, 122, 98, 209, 238, 78, 48, 88, 145, 14, 145, 155, 214, 2 };
         public static byte Decimals() => 8;
         private const ulong factor = 100000000; //decided by Decimals()
-        private static ulong initialSupply = 1000000 * factor;
+        private static BigInteger initialSupply = 100000000 * factor;
         
 
         [DisplayName("transfer")]
@@ -25,7 +25,7 @@ namespace contract
             
             if (method == "deploy") return Deploy();
             
-            if (method == "totalSupply") return Storage.Get(Storage.CurrentContext, "supply");
+            if (method == "totalSupply") return Storage.Get(Storage.CurrentContext, "totalSupply");
 
             if (method == "name") return Name();
 
@@ -44,13 +44,12 @@ namespace contract
         }
 
         public static bool Deploy()
-        {
-            byte[] total_supply = Storage.Get(Storage.CurrentContext, "totalSupply");
-            if (total_supply.Length != 0) return false;
-            Storage.Put(Storage.CurrentContext, Owner, initialSupply);
-            Storage.Put(Storage.CurrentContext, "totalSupply", initialSupply);
+        {          
+            Storage.Put(Storage.CurrentContext, Owner, IntToBytes(initialSupply));
+            Storage.Put(Storage.CurrentContext, "totalSupply", IntToBytes(initialSupply));
             Transferred(null, Owner, initialSupply);
             return true;
+            
         }
 
 
