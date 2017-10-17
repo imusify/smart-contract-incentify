@@ -1,0 +1,14 @@
+version: '{build}'
+image: Visual Studio 2017
+build_script:
+- cmd: |
+    cd ..
+    git clone https://github.com/neo-project/neo-compiler.git
+    cd neo-compiler
+    dotnet restore
+    dotnet build neon -c release -r win10-x64
+    set PATH=%cd%\neon\bin\release\netcoreapp1.0\win10-x64;%PATH%
+    cd %APPVEYOR_BUILD_FOLDER%
+    nuget restore
+    msbuild /t:build /p:configuration=release contract.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /v:m 
+test: off
