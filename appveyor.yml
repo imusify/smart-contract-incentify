@@ -10,4 +10,4 @@ build_script:
     set PATH=%cd%\neon\bin\release\netcoreapp1.0\win10-x64;%PATH%
     cd %APPVEYOR_BUILD_FOLDER%
     nuget restore
-    msbuild /t:build /p:config=release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    msbuild /t:build /p:config=release contract.sln /v:diag
