@@ -14,7 +14,7 @@ namespace contract
         public static readonly byte[] Owner = { 159, 243, 169, 254, 13, 229, 158, 123, 147, 6, 65, 141, 170, 124, 37, 124, 23, 231, 250, 6, 122, 98, 209, 238, 78, 48, 88, 145, 14, 145, 155, 214, 2 };
         public static byte Decimals() => 8;
         private const ulong factor = 100000000; //decided by Decimals()
-        private static BigInteger initialSupply = 100000000 * factor;
+        private static BigInteger initialSupply = 100000000;
         
 
         [DisplayName("transfer")]
