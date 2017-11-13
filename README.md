@@ -1,7 +1,10 @@
 
 # Imusify Incentify
 
+upload music
+
 ![screen shot 2017-09-20 at 17 14 26](https://user-images.githubusercontent.com/28622235/30651921-4f77f382-9e27-11e7-8429-e0b422ae87e8.png)
+
 ![screen shot 2017-09-20 at 17 15 01](https://user-images.githubusercontent.com/28622235/30651920-4f74f3b2-9e27-11e7-8a85-c0e030ec82aa.png)
 
 Display most upvoted content
@@ -15,6 +18,7 @@ and implement following functionality
 create Profiles
 
 ![12_imusify_usersprofile](https://user-images.githubusercontent.com/28622235/30651598-7e55011e-9e26-11e7-9932-87aedc8e7099.jpg)
+
 ![14_imusify_artistprofile_edit](https://user-images.githubusercontent.com/28622235/30651597-7dbba5e6-9e26-11e7-8025-7be154c0e6c5.jpg)
 
 and create Playlists
