@@ -147,8 +147,8 @@ namespace contract
             BigInteger bonus_factor = 1;
 
             if (level > 1) bonus_factor = 2;
-            if (level > 3) bonus_factor = 2;
-            if (level > 9) bonus_factor = 5;
+            if (level > 3) bonus_factor = 5;
+            if (level > 9) bonus_factor = 20;
 
             return bonus_factor * basic_reward;
         }
