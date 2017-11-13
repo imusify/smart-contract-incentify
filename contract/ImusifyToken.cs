@@ -105,6 +105,8 @@ namespace contract
 
                     Runtime.Notify("imuBalance", from, new_originValue);
                     Runtime.Notify("imuBalance", to  , new_targetValue);
+                    Runtime.Notify("imuLevel"  , from, LevelOf(from));
+                    Runtime.Notify("imuLevel"  , to  , LevelOf(to));
                     //Transferred(from, to, amount);
 
                     return true;
