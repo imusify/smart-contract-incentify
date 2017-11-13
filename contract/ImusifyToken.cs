@@ -3,9 +3,9 @@ using Neo.SmartContract.Framework.Services.Neo;
 using System.Numerics;
 
 
-namespace contract
+namespace imusify
 {
-    public class ImusifyToken : SmartContract
+    public class ImusifyRewardSystem : SmartContract
     {
         public static string Name() => "Imusify";
         public static string Symbol() => "IMU";
@@ -13,8 +13,7 @@ namespace contract
         public const ulong factor = 100000000;
         public const ulong totalsupply = 100000000 * factor;
 
-        //Enable Transferred Action for NEP5 compliance as follows
-        //
+        /* Enable Transferred Action for NEP5 compliance as follows */
         //[DisplayName("transfer")]
         //public static event Action<byte[], byte[], BigInteger> Transferred;
 
@@ -81,15 +80,15 @@ namespace contract
         }
 
 
-        public static bool Deploy(byte[] account)
+        public static bool Deploy(byte[] owner_account)
         {
             byte[] supply_check = Storage.Get(Storage.CurrentContext, "totalsupply");
 
             if (supply_check == null)
             {
-                Storage.Put(Storage.CurrentContext, Key("balance", account), totalsupply);
+                Storage.Put(Storage.CurrentContext, Key("balance", owner_account), totalsupply);
                 Storage.Put(Storage.CurrentContext, "totalsupply", totalsupply);
-                Storage.Put(Storage.CurrentContext, "owner", account);
+                Storage.Put(Storage.CurrentContext, "owner", owner_account);
                 return true;
             }
             return false;
@@ -125,37 +124,39 @@ namespace contract
         }
 
 
-        private static BigInteger Reward(byte[] to)
+        private static string Key(string prefix, byte[] account)
         {
-            byte[] owner = Storage.Get(Storage.CurrentContext, "owner");
-            
-            // if (Runtime.CheckWitness(owner)) // Enable this clause after CoZ contest
-
-            BigInteger amount = RewardFunction(LevelUp(to));
-
-            Transfer(owner, to, amount);
-
-            return amount;
-        }
-
-
-        private static string Key(string prefix, byte[] bytes)
-        {
+            // Provide profile storage key for IMU balance as well as user level 
             string hexString = "";
 
             foreach (char c in prefix) hexString += c;
-            foreach (byte b in bytes ) hexString += b;
+            foreach (byte b in account) hexString += b;
 
             return hexString;
         }
 
 
+        private static BigInteger Reward(byte[] account)
+        {
+            // Reward user according to his or her user level
+            byte[] owner = Storage.Get(Storage.CurrentContext, "owner");
+            
+            // if (Runtime.CheckWitness(owner)) // Enable this clause after CoZ contest
+            BigInteger amount = RewardFunction(LevelUp(account));
+
+            Transfer(owner, account, amount);
+
+            return amount;
+        }
+
+
         private static BigInteger RewardFunction(BigInteger level)
         {
+            // Compute user reward depending on user level
             BigInteger basic_reward = 100000000;
-
             BigInteger bonus_factor = 1;
 
+            // Quick level up for demonstration purpose before official launch
             if (level > 1) bonus_factor = 2;
             if (level > 3) bonus_factor = 5;
             if (level > 9) bonus_factor = 20;
