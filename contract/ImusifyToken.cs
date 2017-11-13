@@ -1,9 +1,7 @@
 using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
-using System;
-using System.ComponentModel;
 using System.Numerics;
+
 
 namespace contract
 {
@@ -12,278 +10,170 @@ namespace contract
         public static string Name() => "Imusify";
         public static string Symbol() => "IMU";
         public static byte Decimals() => 8;
-        private const ulong factor = 100000000; //decided by Decimals()
-        private static BigInteger initialSupply = (BigInteger)100000000 * factor;
+        public const ulong factor = 100000000;
+        public const ulong totalsupply = 100000000 * factor;
 
-
-        public static readonly byte[] Owner = {2, 36, 228, 168, 201, 122, 97, 84, 88, 1, 96, 218, 66, 99, 122, 101, 163, 210, 255, 39, 160, 115, 42, 135, 68, 45, 19, 200, 44, 185, 158, 22, 146 };
-
-        // We want this back for NEP5
+        //Enable Transferred Action for NEP5 compliance as follows
         //
         //[DisplayName("transfer")]
         //public static event Action<byte[], byte[], BigInteger> Transferred;
 
-
         public static object Main(string method, params object[] args)
         {
-            // todo: check if notify byte arrays are possible/readable
-            // todo: delete storage
-
-            if (method == "owner") // tmp clause
-            {
-                Runtime.Notify("Owner", Owner);
-
-                return Owner;
-            }
-            else if (method == "deploy")
-            {
-                Runtime.Log("Called deploy"); // tmp
-                return Deploy();
-            }
-            else if (method == "totalSupply")
-            {
-                Runtime.Log("Called total Supply"); // tmp
-                byte[] totalsupply = Storage.Get(Storage.CurrentContext, "totalSupply");
-                BigInteger totalsupply_ = BytesToInt(totalsupply);
-                Runtime.Notify("account", totalsupply_); // tmp
-                Runtime.Notify("account", totalsupply); // tmp
-
-                return totalsupply;
-            }
-            else if (method == "name")
-            {
-                Runtime.Log("name"); // tmp
+            if (method == "name")
                 return Name();
-            }
-            else if (method == "symbol")
-            {
-                Runtime.Log("symbol"); // tmp
+            if (method == "symbol")
                 return Symbol();
-            }
-            else if (method == "decimals")
-            {
-                Runtime.Log("decimals"); // tmp
+            if (method == "decimals")
                 return Decimals();
-            }
-            else if (args.Length > 0)
+            if (method == "totalsupply")
+                return TotalSupply();
+            if (args.Length > 0)
             {
-                Runtime.Log("args.Length > 0"); // tmp
-
                 byte[] account = (byte[])args[0];
 
-                Runtime.Notify("account", account); // tmp
-
                 if (method == "balanceOf")
-                {
-                    Runtime.Log("called balanceOf"); // tmp
-
-                    byte[] balance = Storage.Get(Storage.CurrentContext, account);
-                    BigInteger balance_ = BytesToInt(balance);
-                    Runtime.Notify("account", balance_); // tmp
-                    Runtime.Notify("account", balance); // tmp
-
-                    return 0;
-                }
-                else if (method == "reward") // tmp
-                {
-                    Runtime.Log("reward"); // tmp
+                    return BalanceOf(account);
+                if (method == "deploy")
+                    return Deploy(account);
+                if (method == "levelOf")
+                    return LevelOf(account);
+                if (method == "reward")
                     return Reward(account);
-                }
-                else if (method == "testverify1") // tmp
+                if (method == "transfer")
                 {
-                    Runtime.Log("called testverify1"); // tmp
-
-                    if (VerifySignature(Owner, account))
+                    if (args.Length == 3)
                     {
-                        Runtime.Notify("VerifySignature worked", account);
-                        return 2;
+                        byte[] to = (byte[])args[1];
+                        BigInteger amount = (BigInteger)args[2];
+
+                        //if Runtime.CheckWitness(account); // Enable this clause after CoZ contest
+                        return Transfer(account, to, amount);
                     }
-                    else // tmp
-                    {
-                        Runtime.Notify("NOT VerifySignature", account);
-                        return 3;
-                    }
-                }
-                else if (method == "testverify2") // tmp
-                {
-                    Runtime.Log("called testverify2"); // tmp
-
-                    bool isCaller = Runtime.CheckWitness(Owner);
-
-                    if (isCaller)
-                    {
-                        Runtime.Notify("CheckWitness worked", account);
-                        return 4;
-                    }
-                    else // tmp
-                    {
-                        Runtime.Notify("NOT isCaller", account);
-                        return 5;
-                    }
-                }
-                else if (method == "transfer" && args.Length == 3)
-                {
-                    Runtime.Log("called method == transfer WITH args.Length == 3"); // tmp
-
-                    Runtime.Log("called transfer"); // tmp
-
-                    bool isCaller = Runtime.CheckWitness(account);
-
-                    Runtime.Notify("isCaller", isCaller); // tmp
-
-                    if (isCaller)
-                    {
-                        byte[] receiver = (byte[])args[1];
-
-                        BigInteger amount = BytesToInt((byte[])args[2]);
-
-                        Runtime.Notify("amount", amount); // tmp
-
-                        return Transfer(account, receiver, amount);
-                    }
-                    else
-                    {
-                        Runtime.Log("NOT isCaller"); // tmp
-                        return 6;
-                    }
-                }
-                else
-                {
-                    Runtime.Log("NOT method == transfer && args.Length == 3"); // tmp
-
-                    return 7;
                 }
             }
-            else
+            return false;
+        }
+
+
+        private static BigInteger TotalSupply()
+        {
+            return Storage.Get(Storage.CurrentContext, "totalsupply").AsBigInteger();
+        }
+
+
+        private static BigInteger BalanceOf(byte[] account)
+        {
+            byte[] balance = Storage.Get(Storage.CurrentContext, Key("balance", account));
+
+            if (balance == null)
+                return 0;
+
+            return balance.AsBigInteger();
+        }
+
+
+        public static bool Deploy(byte[] account)
+        {
+            byte[] supply_check = Storage.Get(Storage.CurrentContext, "totalsupply");
+
+            if (supply_check == null)
             {
-                Runtime.Notify("not a suitable method for args.Length > 0", method); // tmp
-
-                return 8;
+                Storage.Put(Storage.CurrentContext, Key("balance", account), totalsupply);
+                Storage.Put(Storage.CurrentContext, "totalsupply", totalsupply);
+                Storage.Put(Storage.CurrentContext, "owner", account);
+                return true;
             }
+            return false;
         }
 
-        private static int Reward(byte[] receiver)
+
+        private static bool Transfer(byte[] from, byte[] to, BigInteger amount)
         {
-            Runtime.Log("called Reward"); // tmp
-
-            bool isCaller = Runtime.CheckWitness(Owner);
-
-            if (isCaller)
-            {
-                Runtime.Notify("CheckWitness Reward worked", receiver);
-
-                int new_count = GetCount() + 1;
-         
-                BigInteger amount = RewardFunction(new_count);
-
-                Storage.Put(Storage.CurrentContext, "count", IntToBytes(new_count));
-
-                Runtime.Notify("amount", amount);
-
-                Transfer(Owner, receiver, amount);
-
-                Runtime.Notify("Transfer Reward worked", receiver);
-
-                return 9;
-            }
-            else // tmp
-            {
-                Runtime.Notify("didn't work", receiver);
-
-                return 10;
-            }
-        }
-
-        private static BigInteger RewardFunction(int n)
-        {
-            int x = 3 * n;
-
-            Runtime.Notify("RewardFunction x", x); // tmp
-
-            BigInteger y = (BigInteger)x;
-
-            return y;
-        }
-
-        private static int GetCount()
-        {
-
-            byte[] count_ = Storage.Get(Storage.CurrentContext, "count");
-
-            BigInteger count = BytesToInt(count_);
-
-            Runtime.Notify("count", count);
-
-            return (int)count;
-        }
-
-        private static int Transfer(byte[] origin, byte[] receiver, BigInteger amount)
-        {
-            // NOTE: The ICO template tranfer fuction is more elaborate - take over the relevant if-clauses
-
             if (amount >= 0)
             {
-                byte[] originValue = Storage.Get(Storage.CurrentContext, origin);
-                byte[] targetValue = Storage.Get(Storage.CurrentContext, receiver);
+                BigInteger originValue = Storage.Get(Storage.CurrentContext, Key("balance", from)).AsBigInteger();
+                BigInteger targetValue = Storage.Get(Storage.CurrentContext, Key("balance",   to)).AsBigInteger();
 
-                BigInteger nOriginValue = BytesToInt(originValue) - amount;
-                BigInteger nTargetValue = BytesToInt(targetValue) + amount;
+                BigInteger new_originValue = originValue - amount;
+                BigInteger new_targetValue = targetValue + amount;
 
-                Runtime.Notify("account", nOriginValue); // tmp
-                Runtime.Notify("account", nTargetValue); // tmp
-
-                if (nOriginValue >= 0)
+                if (new_originValue >= 0)
                 {
-                    Storage.Put(Storage.CurrentContext, origin, IntToBytes(nOriginValue));
-                    Storage.Put(Storage.CurrentContext, receiver, IntToBytes(nTargetValue));
+                    Storage.Put(Storage.CurrentContext, Key("balance", from), new_originValue);
+                    Storage.Put(Storage.CurrentContext, Key("balance", to)  , new_targetValue);
 
-                    Runtime.Notify("Transfer Successful", origin, receiver, amount, Blockchain.GetHeight());
+                    Runtime.Notify("imuBalance", from, new_originValue);
+                    Runtime.Notify("imuBalance", to  , new_targetValue);
+                    //Transferred(from, to, amount);
 
-                    //Transferred(origin, receiver, amount);
-
-                    return 11;
+                    return true;
                 }
             }
 
-            return 12;
+            return false;
         }
 
 
-        public static int Deploy()
+        private static BigInteger Reward(byte[] to)
         {
-            // NOTE: this can be deployed over and over again. To prevent this, do
-            // byte[] total_supply = Storage.Get(Storage.CurrentContext, "totalSupply");
-            // if (total_supply.Length != 0) return false;
+            byte[] owner = Storage.Get(Storage.CurrentContext, "owner");
+            
+            // if (Runtime.CheckWitness(owner)) // Enable this clause after CoZ contest
 
-            Storage.Put(Storage.CurrentContext, Owner, IntToBytes(initialSupply));
-            Storage.Put(Storage.CurrentContext, "totalSupply", IntToBytes(initialSupply));
+            BigInteger amount = RewardFunction(LevelUp(to));
 
-            Runtime.Notify("Deployed with", initialSupply); // tmp
-            byte[] check1 = Storage.Get(Storage.CurrentContext, "totalSupply"); // tmp
-            Runtime.Notify("Deployed with", BytesToInt(check1)); // tmp
+            Transfer(owner, to, amount);
 
-            //Transferred(null, Owner, initialSupply);
-
-            return 13;
+            return amount;
         }
 
 
-        private static byte[] IntToBytes(BigInteger value)
+        private static string Key(string prefix, byte[] bytes)
         {
-            Runtime.Log("called IntToBytes"); // tmp
+            string hexString = "";
 
-            return value.ToByteArray();
+            foreach (char c in prefix) hexString += c;
+            foreach (byte b in bytes ) hexString += b;
+
+            return hexString;
         }
 
 
-        private static BigInteger BytesToInt(byte[] array)
+        private static BigInteger RewardFunction(BigInteger level)
         {
-            Runtime.Log("called BytesToInt"); // tmp
+            BigInteger basic_reward = 100000000;
 
-            var buffer = new BigInteger(array);
-            return buffer;
+            BigInteger bonus_factor = 1;
+
+            if (level > 1) bonus_factor = 2;
+            if (level > 3) bonus_factor = 2;
+            if (level > 9) bonus_factor = 5;
+
+            return bonus_factor * basic_reward;
         }
 
 
+        private static BigInteger LevelOf(byte[] account)
+        {
+            BigInteger nLevel = 0;
+
+            byte[] level = Storage.Get(Storage.CurrentContext, Key("level", account));
+
+            if (level != null)
+                nLevel = level.AsBigInteger();
+
+            return nLevel;
+        }
+
+
+        private static BigInteger LevelUp(byte[] account)
+        {
+            BigInteger new_level = LevelOf(account) + 1;
+            
+            Storage.Put(Storage.CurrentContext, Key("level", account), new_level);
+            
+            return new_level;
+        }
     }
 }
