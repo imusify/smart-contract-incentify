@@ -44,3 +44,9 @@ and artist profiles
 and check out this beautiful player...
 
 ![16_imusify_bigplayer](https://user-images.githubusercontent.com/28622235/30651618-8d1af690-9e26-11e7-8872-9b331b1f9f20.jpg)
+
+
+![1_imusify_home_following](https://user-images.githubusercontent.com/28622235/32715978-8db4cb96-c854-11e7-8560-270a0899f2b6.jpg)
+
+
+![5_imusify_browse_top_explore](https://user-images.githubusercontent.com/28622235/32716000-9c12607c-c854-11e7-8fb0-37c50903aac8.jpg)
