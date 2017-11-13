@@ -16,16 +16,18 @@ and implement following functionality
 
 ![1_imusify_home_following](https://user-images.githubusercontent.com/28622235/30651606-82fe1494-9e26-11e7-90ff-a6f3e15824c0.jpg)
 
-create Profiles
+create user profiles
 
 ![12_imusify_usersprofile](https://user-images.githubusercontent.com/28622235/30651598-7e55011e-9e26-11e7-9932-87aedc8e7099.jpg)
 
+and artist profiles
+
 ![14_imusify_artistprofile_edit](https://user-images.githubusercontent.com/28622235/30651597-7dbba5e6-9e26-11e7-8025-7be154c0e6c5.jpg)
 
-and create Playlists
+...playlists
 
 ![10_imusify_yourplaylist](https://user-images.githubusercontent.com/28622235/30651584-736ce3c0-9e26-11e7-8e3a-6221e10c60eb.jpg)
 
-Check out this beautiful player
+and check out this beautiful player...
 
 ![16_imusify_bigplayer](https://user-images.githubusercontent.com/28622235/30651618-8d1af690-9e26-11e7-8872-9b331b1f9f20.jpg)
