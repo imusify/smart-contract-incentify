@@ -5,6 +5,7 @@ upload music
 
 ![screen shot 2017-09-20 at 17 14 26](https://user-images.githubusercontent.com/28622235/30651921-4f77f382-9e27-11e7-8429-e0b422ae87e8.png)
 
+Display song details and comments
 ![screen shot 2017-09-20 at 17 15 01](https://user-images.githubusercontent.com/28622235/30651920-4f74f3b2-9e27-11e7-8a85-c0e030ec82aa.png)
 
 Display most upvoted content
