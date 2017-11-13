@@ -1,6 +1,28 @@
 
 # imusify incentify
 
+Imusify profits from active users and users are rewarded for their activity. This is the source code for the user reward NEO smart contract for the **imusify** platform that realizes this idea.
+
+## Documentation
+
+When a user creates an imusify account, a NEO wallet is created and the users **IMU token** balance, as well as their reputation level, is stored in the context of the smart contract on the immutable NEO blockchain. User actions on the web platform raise the users reputation level and their level, in turn, determines their IMU reward. 
+
+In more details, events on the Web user interface (see below) are signaled to the *Python* middleware designed for this project, which in turn triggers a return. And indeed, the awared amout is not determined by imusify but by the contract and the users level alone. Beyond the NEP5 complient method calls, which, in particular always enables users to exchange IMU tokens, the main chain of new methods of the imusify contract locig are:
+
+`private static BigInteger LevelUp(byte[] account)`
+
+`private static BigInteger RewardFunction(BigInteger level)`
+
+`private static BigInteger Reward(byte[] to)`
+
+as well as 
+
+`private static BigInteger LevelOf(byte[] account)`
+
+Note: Before the final release, anybody can test the reward trigger and the reward scheme is designed to the curious revelopers can witness the effect of a level raise. At a later point, the scheme will be scaled for long term incentification of users.
+
+## Web user interface
+
 Upload music
 
 ![screen shot 2017-09-20 at 17 14 26](https://user-images.githubusercontent.com/28622235/30651921-4f77f382-9e27-11e7-8429-e0b422ae87e8.png)
