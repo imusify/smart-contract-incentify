@@ -5,9 +5,11 @@ Imusify profits from active users and users are rewarded for their activity. Thi
 
 ## Documentation
 
-When a user creates an imusify account, a NEO wallet is created and the users **IMU token** balance, as well as their reputation level, is stored in the context of the smart contract on the immutable NEO blockchain. User actions on the web platform raise the users reputation level and their level, in turn, determines their IMU reward. 
+When a user creates an imusify account, a NEO wallet is created and assigned to him or her. The users **IMU token** balance, as well as their reputation level, is stored in the context of the smart contract on the immutable NEO blockchain. User actions on the web platform raise the users reputation level and this level, in turn, determines their IMU reward. 
 
-In more details, events on the Web user interface (see below) are signaled to the *Python* middleware designed for this project, which in turn triggers a return. And indeed, the awared amout is not determined by imusify but by the contract and the users level alone. Beyond the NEP5 complient method calls, which, in particular always enables users to exchange IMU tokens, the main chain of new methods of the imusify contract locig are:
+In more details, events on the Web user interface (see below) are signaled to the *Python* middleware designed for this project, which then triggers a return. And indeed, the awared amount is not determined by imusify but by the contract and the users level alone. 
+
+Beyond the NEP5 complient method calls, which, in particular always enables users to exchange IMU tokens, the main chain of new methods of the imusify contract locig are as follows
 
 `BigInteger LevelUp(byte[] account)`
 
