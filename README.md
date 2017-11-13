@@ -6,6 +6,11 @@ upload music
 ![screen shot 2017-09-20 at 17 14 26](https://user-images.githubusercontent.com/28622235/30651921-4f77f382-9e27-11e7-8429-e0b422ae87e8.png)
 
 
+Follow your favorite users
+
+![1_imusify_home_following](https://user-images.githubusercontent.com/28622235/32715978-8db4cb96-c854-11e7-8560-270a0899f2b6.jpg)
+
+
 Display song details and comments
 
 ![screen shot 2017-09-20 at 17 15 01](https://user-images.githubusercontent.com/28622235/30651920-4f74f3b2-9e27-11e7-8a85-c0e030ec82aa.png)
@@ -46,7 +51,6 @@ and check out this beautiful player...
 ![16_imusify_bigplayer](https://user-images.githubusercontent.com/28622235/30651618-8d1af690-9e26-11e7-8872-9b331b1f9f20.jpg)
 
 
-![1_imusify_home_following](https://user-images.githubusercontent.com/28622235/32715978-8db4cb96-c854-11e7-8560-270a0899f2b6.jpg)
-
+Explore music by using tags and filters
 
 ![5_imusify_browse_top_explore](https://user-images.githubusercontent.com/28622235/32716000-9c12607c-c854-11e7-8fb0-37c50903aac8.jpg)
