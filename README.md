@@ -9,7 +9,7 @@ When a user creates an imusify account, a NEO wallet is created and assigned to 
 
 In more details, events on the Web user interface (see below) are signaled to the *Python* middleware designed for this project, which then triggers a return. And indeed, the awared amount is not determined by imusify but by the contract and the users level alone. 
 
-Beyond the NEP5 complient method calls, which, in particular always enables users to exchange IMU tokens, the main chain of new methods of the imusify contract locig are as follows
+Beyond the NEP5 complient method calls - which always enables users to exchange IMU tokens - the main chain of new methods of the imusify contract logic are as follows:
 
 `BigInteger LevelUp(byte[] account)`
 
