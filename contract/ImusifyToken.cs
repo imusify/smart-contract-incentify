@@ -33,11 +33,19 @@ namespace contract
                 byte[] account = (byte[])args[0];
 
                 if (method == "balanceOf")
-                    return BalanceOf(account);
+                {
+                    BigInteger balance = BalanceOf(account);
+                    Runtime.Notify("imuBalance", account, balance);
+                    return balance;
+                }
+                if (method == "levelOf")
+                {
+                    BigInteger level = LevelOf(account); ;
+                    Runtime.Notify("imuLevel", account, level);
+                    return level;
+                }
                 if (method == "deploy")
                     return Deploy(account);
-                if (method == "levelOf")
-                    return LevelOf(account);
                 if (method == "reward")
                     return Reward(account);
                 if (method == "transfer")
@@ -103,10 +111,10 @@ namespace contract
                     Storage.Put(Storage.CurrentContext, Key("balance", from), new_originValue);
                     Storage.Put(Storage.CurrentContext, Key("balance", to)  , new_targetValue);
 
-                    Runtime.Notify("imuBalance", from, new_originValue);
-                    Runtime.Notify("imuBalance", to  , new_targetValue);
                     Runtime.Notify("imuLevel"  , from, LevelOf(from));
                     Runtime.Notify("imuLevel"  , to  , LevelOf(to));
+                    Runtime.Notify("imuBalance", from, new_originValue);
+                    Runtime.Notify("imuBalance", to  , new_targetValue);
                     //Transferred(from, to, amount);
 
                     return true;
