@@ -1,5 +1,5 @@
 
-# Imusify Incentify
+# imusify incentify
 
 upload music
 
