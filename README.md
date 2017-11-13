@@ -31,7 +31,7 @@ and implement following functionality
 ![1_imusify_home_following](https://user-images.githubusercontent.com/28622235/30651606-82fe1494-9e26-11e7-90ff-a6f3e15824c0.jpg)
 
 
-create user profiles
+Create user profiles
 
 ![12_imusify_usersprofile](https://user-images.githubusercontent.com/28622235/30651598-7e55011e-9e26-11e7-9932-87aedc8e7099.jpg)
 
