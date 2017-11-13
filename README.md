@@ -7,9 +7,9 @@ Imusify profits from active users and users are rewarded for their activity. Thi
 
 When a user creates an imusify account, a NEO wallet is created and assigned to him or her. The users **IMU token** balance, as well as their reputation level, is stored in the context of the smart contract on the immutable NEO blockchain. User actions on the web platform raise the users reputation level and this level, in turn, determines their IMU reward. 
 
-In more details, events on the Web user interface (see below) are signaled to the *Python* middleware designed for this project, which then triggers a return. And indeed, the awared amount is not determined by imusify but by the contract and the users level alone. 
+In more details, events on the Web user interface (see below) are signaled to the *Python* middleware designed for this project, which then triggers a return. And indeed, the awarded amount is not determined by imusify but by the contract and the users level alone. 
 
-Beyond the NEP5 complient method calls - which always enables users to exchange IMU tokens - the main chain of new methods of the imusify contract logic are as follows:
+Beyond the NEP5 complient method calls (which always enables users to freely exchange IMU tokens) the main chain of new methods of the imusify contract logic are as follows:
 
 `BigInteger LevelUp(byte[] account)`
 
@@ -17,11 +17,11 @@ Beyond the NEP5 complient method calls - which always enables users to exchange 
 
 `BigInteger Reward(byte[] account)`
 
-as well as 
+This is accompanied by the query
 
 `BigInteger LevelOf(byte[] account)`
 
-Note: Before the final release, anybody can test the reward trigger and the reward scheme is designed to the curious developers can witness the effect of a level raise. At a later point, the scheme will be scaled for long term incentification of users.
+Before the final release, anybody can test the reward trigger and the reward scheme is designed so that the curious developer can test the functionality and quickly witness the effect of a level raise. At a later point, the scheme will be scaled for long term incentification of users.
 
 The project is released under the MIT license.
 
