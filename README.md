@@ -9,17 +9,19 @@ When a user creates an imusify account, a NEO wallet is created and the users **
 
 In more details, events on the Web user interface (see below) are signaled to the *Python* middleware designed for this project, which in turn triggers a return. And indeed, the awared amout is not determined by imusify but by the contract and the users level alone. Beyond the NEP5 complient method calls, which, in particular always enables users to exchange IMU tokens, the main chain of new methods of the imusify contract locig are:
 
-`private static BigInteger LevelUp(byte[] account)`
+`BigInteger LevelUp(byte[] account)`
 
-`private static BigInteger RewardFunction(BigInteger level)`
+`BigInteger RewardFunction(BigInteger level)`
 
-`private static BigInteger Reward(byte[] to)`
+`BigInteger Reward(byte[] account)`
 
 as well as 
 
-`private static BigInteger LevelOf(byte[] account)`
+`BigInteger LevelOf(byte[] account)`
 
-Note: Before the final release, anybody can test the reward trigger and the reward scheme is designed to the curious revelopers can witness the effect of a level raise. At a later point, the scheme will be scaled for long term incentification of users.
+Note: Before the final release, anybody can test the reward trigger and the reward scheme is designed to the curious developers can witness the effect of a level raise. At a later point, the scheme will be scaled for long term incentification of users.
+
+The project is released under the MIT license.
 
 ## Web user interface
 
