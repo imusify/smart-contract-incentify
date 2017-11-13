@@ -1,7 +1,7 @@
 
 # imusify incentify
 
-upload music
+Upload music
 
 ![screen shot 2017-09-20 at 17 14 26](https://user-images.githubusercontent.com/28622235/30651921-4f77f382-9e27-11e7-8429-e0b422ae87e8.png)
 
