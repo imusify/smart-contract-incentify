@@ -33,15 +33,15 @@ namespace imusify
 
                 if (method == "balanceOf")
                 {
-                    BigInteger balance = BalanceOf(account);
-                    Runtime.Notify("imuBalance", account, balance);
-                    return balance;
+                    BigInteger balance = BalanceOf(account) + 1;
+                    Runtime.Notify("imuBalance", account, balance - 1);
+                    return balance - 1;
                 }
                 if (method == "levelOf")
                 {
-                    BigInteger level = LevelOf(account); ;
-                    Runtime.Notify("imuLevel", account, level);
-                    return level;
+                    BigInteger level = LevelOf(account) + 1;
+                    Runtime.Notify("imuLevel", account, level - 1);
+                    return level - 1;
                 }
                 if (method == "deploy")
                     return Deploy(account);
@@ -80,15 +80,16 @@ namespace imusify
         }
 
 
-        public static bool Deploy(byte[] owner_account)
+        public static bool Deploy(byte[] account)
         {
             byte[] supply_check = Storage.Get(Storage.CurrentContext, "totalsupply");
 
             if (supply_check == null)
             {
+                Storage.Put(Storage.CurrentContext, "owner", account);
+                byte[] owner_account = Storage.Get(Storage.CurrentContext, "owner");
                 Storage.Put(Storage.CurrentContext, Key("balance", owner_account), totalsupply);
                 Storage.Put(Storage.CurrentContext, "totalsupply", totalsupply);
-                Storage.Put(Storage.CurrentContext, "owner", owner_account);
                 return true;
             }
             return false;
@@ -99,14 +100,18 @@ namespace imusify
         {
             if (amount >= 0)
             {
+                if (from == to)
+                    return true;
+
                 BigInteger originValue = Storage.Get(Storage.CurrentContext, Key("balance", from)).AsBigInteger();
                 BigInteger targetValue = Storage.Get(Storage.CurrentContext, Key("balance",   to)).AsBigInteger();
 
                 BigInteger new_originValue = originValue - amount;
                 BigInteger new_targetValue = targetValue + amount;
 
-                if (new_originValue >= 0)
+                if (originValue >= amount)
                 {
+                    Runtime.Log("Starting transfer...");
                     Storage.Put(Storage.CurrentContext, Key("balance", from), new_originValue);
                     Storage.Put(Storage.CurrentContext, Key("balance", to)  , new_targetValue);
 
