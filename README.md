@@ -23,6 +23,12 @@ This is accompanied by the query
 
 Before the final release, anybody can test the reward trigger and the reward scheme is designed so that the curious developer can test the functionality and quickly witness the effect of a level raise. At a later point, the scheme will be scaled for long term incentification of users.
 
+Here is a Video "How do deploy a smart contract and do token transfers" which describes the imusify incentify smart contract in depth:
+
+https://youtu.be/WhASIkJS9zk
+
+
+
 The project is released under the MIT license.
 
 ## Web user interface
