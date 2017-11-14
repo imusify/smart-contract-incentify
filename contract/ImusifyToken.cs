@@ -1,7 +1,8 @@
 using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
 using System.Numerics;
-
+using System;
+using System.ComponentModel;
 
 namespace imusify
 {
@@ -71,7 +72,7 @@ namespace imusify
 
         private static BigInteger BalanceOf(byte[] account)
         {
-            byte[] balance = Storage.Get(Storage.CurrentContext, Key("balance", account));
+            byte[] balance = Storage.Get(Storage.CurrentContext, Key("B", account));
 
             if (balance == null)
                 return 0;
@@ -87,8 +88,8 @@ namespace imusify
             if (supply_check == null)
             {
                 Storage.Put(Storage.CurrentContext, "owner", account);
-                byte[] owner_account = Storage.Get(Storage.CurrentContext, "owner");
-                Storage.Put(Storage.CurrentContext, Key("balance", owner_account), totalsupply);
+                byte[] owner = Storage.Get(Storage.CurrentContext, "owner");
+                Storage.Put(Storage.CurrentContext, Key("B", owner), totalsupply);
                 Storage.Put(Storage.CurrentContext, "totalsupply", totalsupply);
                 return true;
             }
@@ -103,8 +104,8 @@ namespace imusify
                 if (from == to)
                     return true;
 
-                BigInteger originValue = Storage.Get(Storage.CurrentContext, Key("balance", from)).AsBigInteger();
-                BigInteger targetValue = Storage.Get(Storage.CurrentContext, Key("balance",   to)).AsBigInteger();
+                BigInteger originValue = Storage.Get(Storage.CurrentContext, Key("B", from)).AsBigInteger();
+                BigInteger targetValue = Storage.Get(Storage.CurrentContext, Key("B",   to)).AsBigInteger();
 
                 BigInteger new_originValue = originValue - amount;
                 BigInteger new_targetValue = targetValue + amount;
@@ -112,8 +113,8 @@ namespace imusify
                 if (originValue >= amount)
                 {
                     Runtime.Log("Starting transfer...");
-                    Storage.Put(Storage.CurrentContext, Key("balance", from), new_originValue);
-                    Storage.Put(Storage.CurrentContext, Key("balance", to)  , new_targetValue);
+                    Storage.Put(Storage.CurrentContext, Key("B", from), new_originValue);
+                    Storage.Put(Storage.CurrentContext, Key("B", to)  , new_targetValue);
 
                     Runtime.Notify("imuLevel"  , from, LevelOf(from));
                     Runtime.Notify("imuLevel"  , to  , LevelOf(to));
@@ -131,13 +132,7 @@ namespace imusify
 
         private static string Key(string prefix, byte[] account)
         {
-            // Provide profile storage key for IMU balance as well as user level 
-            string hexString = "";
-
-            foreach (char c in prefix) hexString += c;
-            foreach (byte b in account) hexString += b;
-
-            return hexString;
+            return string.Concat(prefix, account.AsString());
         }
 
 
@@ -174,7 +169,7 @@ namespace imusify
         {
             BigInteger nLevel = 0;
 
-            byte[] level = Storage.Get(Storage.CurrentContext, Key("level", account));
+            byte[] level = Storage.Get(Storage.CurrentContext, Key("L", account));
 
             if (level != null)
                 nLevel = level.AsBigInteger();
@@ -187,7 +182,7 @@ namespace imusify
         {
             BigInteger new_level = LevelOf(account) + 1;
             
-            Storage.Put(Storage.CurrentContext, Key("level", account), new_level);
+            Storage.Put(Storage.CurrentContext, Key("L", account), new_level);
             
             return new_level;
         }
