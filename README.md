@@ -48,7 +48,7 @@ Display song details and comments
 ![screen shot 2017-09-20 at 17 15 01](https://user-images.githubusercontent.com/28622235/30651920-4f74f3b2-9e27-11e7-8a85-c0e030ec82aa.png)
 
 
-and purchase music for personal or commercial user
+and purchase music for personal or commercial use
 
 ![screen shot 2017-11-13 at 09 22 58](https://user-images.githubusercontent.com/28622235/32715889-49f7a20c-c854-11e7-962e-8a5a405efd30.png)
 
