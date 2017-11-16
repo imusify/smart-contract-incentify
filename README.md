@@ -9,7 +9,7 @@ When a user creates an imusify account, a NEO wallet is created and assigned to 
 
 In more details, events on the web user interface (see below) are signaled to the *Python* middleware designed for this project, which then triggers a return. And indeed, the awarded amount is not determined by imusify but by the contract and the users level alone. 
 
-Beyond the NEP5 compliant method calls (which always enables users to freely exchange IMU tokens) the main chain of new methods of the imusify contract logic are as follows:
+Beyond the NEP5 compliant method calls (like `levelOf` or `transfer`, which always enables users to freely exchange IMU tokens) the main chain of new methods of the imusify contract logic are as follows:
 
 `BigInteger LevelUp(byte[] account)`
 
@@ -21,13 +21,11 @@ This is accompanied by the query
 
 `BigInteger LevelOf(byte[] account)`
 
-Before the final release, anybody can test the reward trigger and the reward scheme is designed so that the curious developer can test the functionality and quickly witness the effect of a level raise. At a later point, the scheme will be scaled for long term incentification of users.
+Simply call `levelOf` followed by any NEO address. Before the final release, anybody can test the reward trigger. To this end, similar to `levelOf` and `balanceOf`, call `reward` followed by a NEO address. In the source code above, the reward scheme is designed so that the curious developer can test the functionality and quickly witness the effect of a level raise.  At a later point, the scheme will be scaled for long term incentification of users.
 
 Here is a Video "How do deploy a smart contract and do token transfers" which describes the imusify incentify smart contract in depth:
 
 https://youtu.be/WhASIkJS9zk
-
-
 
 The project is released under the MIT license.
 
