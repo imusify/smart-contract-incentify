@@ -23,7 +23,7 @@ This is accompanied by the query
 
 Simply call `levelOf` followed by any NEO address. Before the final release, anybody can test the reward trigger. To this end, similar to `levelOf` and `balanceOf`, call `reward` followed by a NEO address. In the source code above, the reward scheme is designed so that the curious developer can test the functionality and quickly witness the effect of a level raise.  At a later point, the scheme will be scaled for long term incentification of users.
 
-Here is a Video "How do deploy a smart contract and do token transfers" which describes the imusify incentify smart contract in depth:
+Here is a Video "How to deploy a smart contract and do token transfers" which describes the imusify incentify smart contract in depth:
 
 https://youtu.be/WhASIkJS9zk
 
