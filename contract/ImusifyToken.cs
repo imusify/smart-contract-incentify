@@ -34,13 +34,13 @@ namespace imusify
 
                 if (method == "balanceOf")
                 {
-                    BigInteger balance = BalanceOf(account) + 1;
+                    BigInteger balance = BalanceOf(account) + 1; // TODO: correct this +1 -1 hack
                     Runtime.Notify("imuBalance", account, balance - 1);
                     return balance - 1;
                 }
                 if (method == "levelOf")
                 {
-                    BigInteger level = LevelOf(account) + 1;
+                    BigInteger level = LevelOf(account) + 1;  
                     Runtime.Notify("imuLevel", account, level - 1);
                     return level - 1;
                 }
@@ -83,9 +83,9 @@ namespace imusify
 
         public static bool Deploy(byte[] account)
         {
-            byte[] supply_check = Storage.Get(Storage.CurrentContext, "totalsupply");
+            byte[] supplyCheck = Storage.Get(Storage.CurrentContext, "totalsupply");
 
-            if (supply_check == null)
+            if (supplyCheck == null)
             {
                 Storage.Put(Storage.CurrentContext, "owner", account);
                 byte[] owner = Storage.Get(Storage.CurrentContext, "owner");
@@ -105,7 +105,7 @@ namespace imusify
                     return true;
 
                 BigInteger originValue = Storage.Get(Storage.CurrentContext, Key("B", from)).AsBigInteger();
-                BigInteger targetValue = Storage.Get(Storage.CurrentContext, Key("B",   to)).AsBigInteger();
+                BigInteger targetValue = Storage.Get(Storage.CurrentContext, Key("B", to)).AsBigInteger();
 
                 BigInteger new_originValue = originValue - amount;
                 BigInteger new_targetValue = targetValue + amount;
@@ -138,7 +138,8 @@ namespace imusify
 
         private static BigInteger Reward(byte[] account)
         {
-            // Reward user according to his or her user level
+            /// Reward user according to his or her user level
+            
             byte[] owner = Storage.Get(Storage.CurrentContext, "owner");
             
             // if (Runtime.CheckWitness(owner)) // Enable this clause after CoZ contest
@@ -152,16 +153,18 @@ namespace imusify
 
         private static BigInteger RewardFunction(BigInteger level)
         {
-            // Compute user reward depending on user level
-            BigInteger basic_reward = 100000000;
-            BigInteger bonus_factor = 1;
+            /// Compute user reward depending on user level
+            
+            BigInteger basicReward = 100000000; 
+            // TODO test if I can just use 'factor' here
+            BigInteger bonusFactor = 1;
 
-            // Quick level up for demonstration purpose before official launch
-            if (level > 1) bonus_factor = 2;
-            if (level > 3) bonus_factor = 5;
-            if (level > 9) bonus_factor = 20;
+            /// Quick level up for demonstration purpose before official launch
+            if (level > 1) bonusFactor = 2;
+            if (level > 3) bonusFactor = 5;
+            if (level > 9) bonusFactor = 20;
 
-            return bonus_factor * basic_reward;
+            return bonusFactor * basicReward;
         }
 
 
@@ -180,11 +183,11 @@ namespace imusify
 
         private static BigInteger LevelUp(byte[] account)
         {
-            BigInteger new_level = LevelOf(account) + 1;
+            BigInteger newLevel = LevelOf(account) + 1;
             
-            Storage.Put(Storage.CurrentContext, Key("L", account), new_level);
+            Storage.Put(Storage.CurrentContext, Key("L", account), newLevel);
             
-            return new_level;
+            return newLevel;
         }
     }
 }
