@@ -29,6 +29,10 @@ https://youtu.be/WhASIkJS9zk
 
 The project is released under the MIT license.
 
+### Script hash
+
+`0x645c4dcdc6cc4b69a8b8d7c0a532795d0312d5e6`
+
 ## Web user interface
 
 Upload music
